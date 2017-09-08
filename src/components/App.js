@@ -7,48 +7,48 @@ import '../animation.css';
 
 class App extends React.Component {
 
-	state = {
-		messages: {}
-	}
+  state = {
+    messages: {}
+  };
 
-	componentWillMount(){
-		this.ref = base.syncState('/', {
-			context: this,
-			state: 'messages'
-		});
-	}
+  componentWillMount(){
+    this.ref = base.syncState('/', {
+      context: this,
+      state: 'messages'
+    });
+  }
 
-	/**
-	 * fixe scroll on last message
-	 */
-	componentDidUpdate() {
-		this.messages.scrollTop = this.messages.scrollHeight;
-	}
+  /**
+   * fixe scroll on last message
+   */
+  componentDidUpdate() {
+    this.messages.scrollTop = this.messages.scrollHeight;
+  }
 
-	addMessage = message => {
-		//copie state.message
-		const messages = {...this.state.messages};
-		const timestamp = Date.now();
-		messages[`message-${timestamp}`] = message;
+  addMessage = message => {
+    //copie state.message
+    const messages = {...this.state.messages};
+    const timestamp = Date.now();
+    messages[`message-${timestamp}`] = message;
 
-		//if messages>10 => delete oldMessage
-		Object.keys(messages).slice(0, -10).map(key => messages[key] = null);
+    //if messages>10 => delete oldMessage
+    Object.keys(messages).slice(0, -10).map(key => messages[key] = null);
 
-		this.setState({messages});
-	};
+    this.setState({messages});
+  };
 
-	isUser = (pseudo) => {
-			return pseudo === this.props.params.pseudo;
-	};
+  isUser = (pseudo) => {
+    return pseudo === this.props.params.pseudo;
+  };
 
-	render() {
+  render() {
 
-		const messages = Object
-		.keys(this.state.messages)
-		.map(key => <Message key={key} details={this.state.messages[key]} isUser={this.isUser}/>)
-		;
+    const messages = Object
+      .keys(this.state.messages)
+      .map(key => <Message key={key} details={this.state.messages[key]} isUser={this.isUser}/>)
+    ;
 
-		return (
+    return (
 			<div className="box">
 				<div>
 					<div className="messages" ref={input => this.messages = input}>
@@ -61,7 +61,7 @@ class App extends React.Component {
 							//on delete message
 							transitionLeaveTimeout={200}
 						>
-							{messages}
+              {messages}
 						</ReactCSSTransitionGroup>
 					</div>
 					<Formulaire
@@ -71,11 +71,11 @@ class App extends React.Component {
 					/>
 				</div>
 			</div>
-		)
-	}
-	static propTypes = {
-		params: React.PropTypes.object.isRequired
-	}
+    )
+  }
+  static propTypes = {
+    params: React.PropTypes.object.isRequired
+  }
 }
 
 export default App;
